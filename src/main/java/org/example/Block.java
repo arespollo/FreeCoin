@@ -1,6 +1,9 @@
 package org.example;
 
+import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+import com.google.gson.GsonBuilder;
 
 class BlockHeader {
     private String previousBlockHash;
@@ -9,12 +12,16 @@ class BlockHeader {
     private int difficultyTarget;
     private int nonce;
 
-    BlockHeader(String previousBlockHash, String merkleRoot, long timeStamp, int difficultyTarget, int nonce) {
+    public String calculateHash(){
+        return Util.sha256(previousBlockHash + merkleRoot + timeStamp + difficultyTarget + nonce);
+    }
+
+    BlockHeader(String previousBlockHash, String merkleRoot, int difficultyTarget) {
         this.previousBlockHash = previousBlockHash;
         this.merkleRoot = merkleRoot;
-        this.timeStamp = timeStamp;
+        this.timeStamp = new Date().getTime();
         this.difficultyTarget = difficultyTarget;
-        this.nonce = nonce;
+        this.nonce = 0;// nonce 在后面 mint 的过程中不断改变
     }
 
     public String getPreviousBlockHash() {
@@ -64,12 +71,19 @@ class Block {
     private long transactionCounter;      // Number of transactions in this block (VarInt) 待实现可变整数
     private List<Transaction> transactions;
 
-    public Block(BlockHeader header, int size, long transactionCounter, List<Transaction> transactions) {
-        this.header = header;
-        this.size = size;
-        this.transactionCounter = transactionCounter;
-        this.transactions = transactions;
+    public String calculateHash(){
+        return header.calculateHash();
     }
+    public Block(String previousBlockHash, String merkleRoot, int difficultyTarget)
+    {
+        this.header = new BlockHeader(previousBlockHash, merkleRoot, difficultyTarget);
+    }
+//    public Block(BlockHeader header, int size, long transactionCounter, List<Transaction> transactions) {
+//        this.header = header;
+//        this.size = size;
+//        this.transactionCounter = transactionCounter;
+//        this.transactions = transactions;
+//    }
 
     public BlockHeader getHeader() {
         return header;
@@ -101,5 +115,40 @@ class Block {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+}
+
+class BlockChain {
+    public static ArrayList<Block> blockchain = new ArrayList<Block>();
+    private int difficultyTarget = 2;
+    public void createGenesisBlock(){
+        blockchain.add(new Block("0","1", difficultyTarget));
+    }
+    public void createBlock(){
+        if(blockchain.size() > 1)
+            blockchain.add(new Block(getLatestBlock().calculateHash(),"1", difficultyTarget));
+        else
+            createGenesisBlock();
+    }
+
+    public boolean isChainValid(){
+        Block currentBlock;
+        Block previousBlock;
+        // 从 Genesis Block 之后开始循环
+        for(int i = 1; i < blockchain.size(); i++) {
+            currentBlock = blockchain.get(i);
+            previousBlock = blockchain.get(i - 1);
+            if(!currentBlock.getHeader().getPreviousBlockHash().equals(previousBlock.calculateHash())){
+                return false;
+            }
+        }
+        return true;
+    }
+    // 获取链条顶部的区块
+    public Block getLatestBlock(){
+        return blockchain.get(blockchain.size() - 1); //!blockchain.isEmpty() ? null :
+    }
+    public String toJson(){
+        return new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
     }
 }
