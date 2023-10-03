@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75b4c6a9-2aa1-4be5-864a-6e9b946a8631" name="Changes" comment="更新链的部分功能">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Util.java" afterDir="false" />
+    <list default="true" id="75b4c6a9-2aa1-4be5-864a-6e9b946a8631" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Base58Check.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Base58Check.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Block.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +61,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/IdeaProjects/FreeDom/src/main/java/org/example",
+    "last_opened_file_path": "E:/BlockChain/Java/blockchain",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -125,7 +126,7 @@
       <updated>1695816088591</updated>
       <workItem from="1695816089668" duration="11185000" />
       <workItem from="1696148536753" duration="73000" />
-      <workItem from="1696148860783" duration="6544000" />
+      <workItem from="1696148860783" duration="19862000" />
     </task>
     <task id="LOCAL-00001" summary="initialization">
       <option name="closed" value="true" />
@@ -143,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696149930494</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="更新链的部分功能">
+      <option name="closed" value="true" />
+      <created>1696247717743</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1696247717743</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,7 +173,8 @@
     <MESSAGE value="initialization" />
     <MESSAGE value="none" />
     <MESSAGE value="更新链的部分功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新链的部分功能" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

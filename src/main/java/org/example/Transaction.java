@@ -1,10 +1,11 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class OutPoint {
-    private String hash;
-    private int n;
+    private String hash; // 交易的 hash
+    private int n;// 指明是哪一个输出
 
     public OutPoint(String hash, int n) {
         this.hash = hash;
@@ -33,7 +34,7 @@ class OutPoint {
 class TransactionInput {
     private OutPoint preOutput;
     private String scriptSig;  // wait for it to be perfected into a script type.
-    //private long nSequence;    // temporarily don't know this variable
+    private long nSequence;
 
     public TransactionInput(OutPoint preOutput, String scriptSig) {//, long nSequence
         this.preOutput = preOutput;
@@ -95,29 +96,39 @@ class TransactionOutput {
 }
 
 class Transaction {
-    private List<TransactionInput> inputs;
-    private List<TransactionOutput> outputs;
+    private ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
+    private ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
     private int lockTime;
 
-    public Transaction(List<TransactionInput> inputs, List<TransactionOutput> outputs, int lockTime) {
-        this.inputs = inputs;
-        this.outputs = outputs;
-        this.lockTime = lockTime;
+    public Transaction() {
     }
 
-    public List<TransactionInput> getInputs() {
+    public String calculateHash() {
+        // 这里可以根据你的需要添加更多的信息
+        String data = "";
+        for (TransactionInput input : inputs) {
+            data += input.getPreOutput().getHash() + input.getPreOutput().getN();
+        }
+        for (TransactionOutput output : outputs) {
+            data += output.getValue() + output.getScriptPubKey();
+        }
+        data += lockTime;
+        return Util.sha256(data);
+    }
+
+    public ArrayList<TransactionInput> getInputs() {
         return inputs;
     }
 
-    public void setInputs(List<TransactionInput> inputs) {
+    public void setInputs(ArrayList<TransactionInput> inputs) {
         this.inputs = inputs;
     }
 
-    public List<TransactionOutput> getOutputs() {
+    public ArrayList<TransactionOutput> getOutputs() {
         return outputs;
     }
 
-    public void setOutputs(List<TransactionOutput> outputs) {
+    public void setOutputs(ArrayList<TransactionOutput> outputs) {
         this.outputs = outputs;
     }
 

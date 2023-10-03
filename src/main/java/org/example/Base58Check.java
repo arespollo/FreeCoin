@@ -65,6 +65,7 @@ public class Base58Check {
 
         return decoded;
     }
+
     private String base58Encode(byte[] input) {
         BigInteger value = new BigInteger(1, input);
         StringBuilder sb = new StringBuilder();

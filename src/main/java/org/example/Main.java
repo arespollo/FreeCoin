@@ -15,10 +15,9 @@ public class Main {
 
         BlockChain chain = new BlockChain();
         chain.createGenesisBlock();
-        chain.createBlock();
-        chain.createBlock();
-        chain.blockchain.get(1).getHeader().setMerkleRoot("666");
-        System.out.println(chain.isChainValid());
-//        System.out.println(chain.toJson());
+        Transaction tx = new Transaction();
+        chain.getLatestBlock().addTransaction(tx);
+        chain.getLatestBlock().getHeader().setMerkleRoot(Util.getMerkleRoot(chain.getLatestBlock().getTransactions()));
+        System.out.println(chain.toJson());
     }
 }

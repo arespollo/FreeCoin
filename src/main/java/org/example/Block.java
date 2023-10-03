@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.Date;
-import java.util.List;
 import java.util.ArrayList;
 import com.google.gson.GsonBuilder;
 
@@ -69,8 +68,7 @@ class Block {
     private BlockHeader header;
     private int size;                    // Size of the block in bytes after this field
     private long transactionCounter;      // Number of transactions in this block (VarInt) 待实现可变整数
-    private List<Transaction> transactions;
-
+    private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     public String calculateHash(){
         return header.calculateHash();
     }
@@ -85,36 +83,59 @@ class Block {
 //        this.transactions = transactions;
 //    }
 
+    public boolean addTransaction(Transaction transaction) {
+        //process transaction and check if valid, unless block is genesis block then ignore.
+        if(transaction == null){
+            return false;
+        }
+        // 不是 Genesis Block
+//        if((!"0".equals(header.getPreviousBlockHash()))) {
+//            // check 交易是否合法
+//            if((transaction.process() != true)) {
+//                System.out.println("Transaction failed to process. Discarded.");
+//                return false;
+//            }
+//        }
+
+        transactions.add(transaction);
+        System.out.println("Transaction Successfully added to Block");
+        return true;
+    }
+
     public BlockHeader getHeader() {
         return header;
     }
 
-    public void setHeader(BlockHeader header) {
+    public Block setHeader(BlockHeader header) {
         this.header = header;
+        return this;
     }
 
     public int getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public Block setSize(int size) {
         this.size = size;
+        return this;
     }
 
     public long getTransactionCounter() {
         return transactionCounter;
     }
 
-    public void setTransactionCounter(long transactionCounter) {
+    public Block setTransactionCounter(long transactionCounter) {
         this.transactionCounter = transactionCounter;
+        return this;
     }
 
-    public List<Transaction> getTransactions() {
+    public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
+    public Block setTransactions(ArrayList<Transaction> transactions) {
         this.transactions = transactions;
+        return this;
     }
 }
 
@@ -122,15 +143,8 @@ class BlockChain {
     public static ArrayList<Block> blockchain = new ArrayList<Block>();
     private int difficultyTarget = 2;
     public void createGenesisBlock(){
-        blockchain.add(new Block("0","1", difficultyTarget));
+        blockchain.add(new Block("0","Genesis Merkle Root", difficultyTarget));
     }
-    public void createBlock(){
-        if(blockchain.size() > 1)
-            blockchain.add(new Block(getLatestBlock().calculateHash(),"1", difficultyTarget));
-        else
-            createGenesisBlock();
-    }
-
     public boolean isChainValid(){
         Block currentBlock;
         Block previousBlock;
@@ -148,6 +162,7 @@ class BlockChain {
     public Block getLatestBlock(){
         return blockchain.get(blockchain.size() - 1); //!blockchain.isEmpty() ? null :
     }
+    //转换成 json 格式，方便查看
     public String toJson(){
         return new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
     }
