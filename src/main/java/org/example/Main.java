@@ -13,11 +13,12 @@ public class Main {
 //        System.out.println("Private Key (hex decimal): " + keypair.getPrivateKey("hex"));
 //        System.out.println("Private Key (base58Check): " + keypair.getPrivateKey("base58"));
 
-        BlockChain chain = new BlockChain();
-        chain.createGenesisBlock();
-        Transaction tx = new Transaction();
-        chain.getLatestBlock().addTransaction(tx);
-        chain.getLatestBlock().getHeader().setMerkleRoot(Util.getMerkleRoot(chain.getLatestBlock().getTransactions()));
-        System.out.println(chain.toJson());
+//        BlockChain chain = new BlockChain();
+//        chain.createGenesisBlock();
+//        Transaction tx = new Transaction();
+//        chain.getLatestBlock().addTransaction(tx);
+//        chain.getLatestBlock().getHeader().setMerkleRoot(Util.getMerkleRoot(chain.getLatestBlock().getTransactions()));
+//        System.out.println(chain.toJson());
+        System.out.println(Util.sha256("2353f4").getBytes().length);
     }
 }
